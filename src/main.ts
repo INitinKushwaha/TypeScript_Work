@@ -1,67 +1,33 @@
-let stringArr = ['one', 'hey', 'Nitin'];    
-let guitars = ['Strat','les Paul', 5150];
-let mixedData = ['EVH',1984,true];
+type One = string
+type two = string | number
+type three = 'hello'
 
-stringArr[0] = 'Kushwaha';
-stringArr.push('Nitin');
+// convert to more or less specfic 
 
-guitars[0]=1984;
-guitars.unshift('hello');
+let a : One = 'hello'
+let b = a as two  // less specific 
+let c = a as three // more specific
 
-guitars = stringArr;
+let d = <One> 'world'
+let e = <string | number> 'world'
 
-let test =[];
-let bans : string[] = [];
-
-bans.push('hello');
-
-// tuples
-
-let myTuple : [string,number,boolean] = ['hello', 10, true];
-let mixed = ['hello', 10, true];
-
-mixed = myTuple
-
-
-// objects
-
-let myObj : object
-myObj =[]
-console.log(typeof myObj)
-myObj = bans
-myObj ={}
-console.log(typeof myObj)
-
-const exampleObj ={
-    prop1 :'nitin',
-    prop2 : 10
-}
-console.log(exampleObj.prop1)
-exampleObj.prop2 = 5;
-
-type Guitarist ={
-    name : string,
-    active? : boolean,
-    albums : (string | number)[]
+const addOrConcat = (a: number, b: number, c:'add' |'concat ') :number |string =>{
+    if(c==='add'){
+        return a+b
+    }
+    return ' '  + a + b
 }
 
-let evh : Guitarist ={
-    name : 'Eddie',
-    active : true,
-    albums : ['Van Halen 1', '1984']
-}
+let myVal : string = addOrConcat(1,2,'add') as string
 
-let JP : Guitarist ={
-    name : 'Jimmy Page',
-    albums : ['I', 2003]
-}
-evh = JP
+let nextVal: number = addOrConcat(1,2,'add') as number
 
-const greetGuitarist = (guitarist : Guitarist) =>{
-    return `hello ${guitarist.name}!`
-}
+(10 as unknown) as string
 
-console.log(greetGuitarist(JP))
 
+// The DOM
+
+const img = document.querySelector('img') as HTMLImageElement
+const myImg = document.getElementById('#img') as HTMLImageElement
 
 
