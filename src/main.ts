@@ -1,33 +1,112 @@
-type One = string
-type two = string | number
-type three = 'hello'
-
-// convert to more or less specfic 
-
-let a : One = 'hello'
-let b = a as two  // less specific 
-let c = a as three // more specific
-
-let d = <One> 'world'
-let e = <string | number> 'world'
-
-const addOrConcat = (a: number, b: number, c:'add' |'concat ') :number |string =>{
-    if(c==='add'){
-        return a+b
+class Coder{
+    constructor(
+        public readonly name:string,
+        public music:string,
+        private age:number,
+        protected lang:string = 'JS'
+        ) {
+            this.name = name;
+            this.music = music;
+            this.age = age;
+            this.lang = lang;
     }
-    return ' '  + a + b
+    getAge(){
+        return `hello, I'm ${this.age}`
+    }
+}
+const nitin = new Coder('Nitin','Rock',21,'JS')
+console.log(nitin.getAge())
+// console.log(nitin.age)
+// console.log(nitin.music)
+// console.log(nitin.lang)
+console.log(nitin.name)
+
+class WebDev extends Coder{
+    constructor(
+        public computer : string,
+        name:string,
+        music:string,
+        age:number,
+    ) {
+        super(name,music,age)
+        this.computer = computer;
+    }
+    public getlang(){
+        return `I write a ${this.lang} developer`
+    }
+}
+const sara = new WebDev('Mac','Sara','Pop',22)
+console.log(sara.getlang())
+
+// console.log(sara.age)
+// console.log(sara.lang)
+
+// *****************************
+
+interface Musician{
+    name : string,
+    instrument: string,
+    play(action:string):string
 }
 
-let myVal : string = addOrConcat(1,2,'add') as string
+class Guitarist implements Musician{
+    constructor(
+        public name : string,
+        public instrument : string
+    ) {
+        this.name = name;
+        this.instrument = instrument;
+    }
+    public play(action:string){
+        return `${this.name} is playing ${this.instrument} ${action}`
+    }
+}
 
-let nextVal: number = addOrConcat(1,2,'add') as number
+const page = new Guitarist('Jimmy Page','Guitar')
+console.log(page.play('solo'))
 
-(10 as unknown) as string
+class Peeps {
+    static count: number = 0
+    static getcount():number{
+        return Peeps.count
+    }
 
+    public id:number
+    constructor(
+        public name : string
+    ) {
+        this.name = name;
+        this.id = Peeps.count++
+    }
+}
 
-// The DOM
+const john = new Peeps('John')
+const paul = new Peeps('Paul')
+const george = new Peeps('George')
+console.log(Peeps.getcount())
+console.log(paul.id)
 
-const img = document.querySelector('img') as HTMLImageElement
-const myImg = document.getElementById('#img') as HTMLImageElement
+// *****************************
 
+class Bands{
+    private dataState : string[]
 
+    constructor(){
+        this.dataState = []
+    }
+    public get data():string []{
+        return this.dataState
+    }
+    public set data(value:string[]){
+      if(Array.isArray(value) && value.every(item => typeof item === 'string')){
+          this.dataState = value
+      }else throw new Error('Invalid data')
+    }
+}
+
+const myBand = new Bands()
+myBand.data = ['John','Paul','George','Ringo']
+console.log(myBand.data)
+
+myBand.data =[...myBand.data,'Pete']
+console.log(myBand.data)
