@@ -114,4 +114,27 @@ type AssignParams = Parameters<typeof createnewAssign>
 const assignParams: AssignParams = ["Assignment 1", 100]
 console.log(assignParams);
 
+// Awaited - help us with the return type of an async function
+
+interface User {
+    id: number,
+    name: string,
+    email: string
+}
+
+const fetchUser = async (id: number): Promise<User> => {
+   const data = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`
+ ).then(res => {
+    return res.json()
+}).catch(err => {
+    if(err instanceof Error) {
+        console.error(err.message)
+    })
+    return data
+}
+type fetchedUser = Awaited<ReturnType<typeof fetchUser>>
+
+fetchUser(1).then(user => {
+    console.log(user)
+}
 
