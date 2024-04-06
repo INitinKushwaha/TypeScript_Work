@@ -136,5 +136,5 @@ type fetchedUser = Awaited<ReturnType<typeof fetchUser>>
 
 fetchUser(1).then(user => {
     console.log(user)
-}
+});
 
